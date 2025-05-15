@@ -1,12 +1,3 @@
-function log(msg) {
-	const logger = document.getElementById("logger");
-	logger.textContent = `${msg}\n${logger.textContent}`;
-}
-
-function logerr(err) {
-	log(`ERROR: ${err}`);
-}
-
 function getCssStyle(target) {
 	const cssRules = document.styleSheets[0].cssRules;
 	for (let i = 0; i < cssRules.length; ++i) {
@@ -35,8 +26,6 @@ function canvasCssTransform(x, y, s) {
 	return `translate(${x}px, ${y}px) scale(${s})`;
 }
 
-function download() {}
-
 document.addEventListener("DOMContentLoaded", () => {
 	let windowW = window.innerWidth;
 	let windowH = window.innerHeight;
@@ -61,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	const cssStyle = getCssStyle("canvas#pixelcanvas");
 	if (!cssStyle) {
-		logerr("css rule for canvas#canvas not found.");
 		throw new Error("css rule for canvas#canvas not found.");
 	}
 
@@ -89,8 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (event.touches.length == 1) {
 			const pageDx = event.changedTouches[0].pageX - activeTouches[event.changedTouches[0].identifier][0];
 			const pageDy = event.changedTouches[0].pageY - activeTouches[event.changedTouches[0].identifier][1];
-			// if (Math.sqrt(pageDx*pageDx+pageDy*pageDy) < 1) { return; }
-			// log(`${Math.sqrt(pageDx*pageDx+pageDy*pageDy)}`);
 			const dx = event.changedTouches[0].pageX - canvasCx;
 			const dy = event.changedTouches[0].pageY - canvasCy;
 			const i = Math.floor((dx + (1 + canvasS/2) * canvasW)/canvasS);
@@ -142,27 +128,4 @@ document.addEventListener("DOMContentLoaded", () => {
 		event.preventDefault();
 		removeTouches(event.changedTouches, activeTouches);
 	});
-
-	// const anchor = document.getElementById("downloadanchor");
-	// anchor.download = "something";
-	// anchor.type = "image/png";
-	// canvas.width = 512;
-	// canvas.height = 512;
-	// const imageData = canvas.getImageData();
-	// const scale = 512/canvasW;
-	// canvas.width = scale*canvasW;
-	// canvas.height = scale*canvasH;
-	// const ctx2 = canvas.getContext("2d");
-	// const ctx2 = context;
-	// for (let j = 0; j < canvasW; ++j) {
-	// 	for (let i = 0; i < 0; ++i) {
-	// 		const k = j * canvasW + i;
-	// 		ctx2.fillStyle = "#ffffff";
-	// 		ctx2.fillRect(i, j, scale, scale);
-	// 	}
-	// }
-	// anchor.href = canvas.toDataURL();
-	// canvas.width = canvasW;
-	// canvas.height = canvasH;
-	// canvas.putImageData(imageData);
 })
